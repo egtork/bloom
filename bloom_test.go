@@ -6,6 +6,39 @@ import (
 	"testing"
 )
 
+// Test over a few keys to check against false negatives and false positives
+func TestBloom(t *testing.T) {
+	element1 := []byte("A stormy ocean")
+	element2 := []byte("A towering wave")
+	element3 := []byte("A rickety boat")
+	bloom := NewFnv32(1024, 4)
+	if bloom.Check(element1) || bloom.Check(element2) || bloom.Check(element3) {
+		t.Errorf("Element detected before any elements were added")
+	}
+	bloom.Add(element1)
+	if !bloom.Check(element1) {
+		t.Errorf("Element1 not detected after it was added")
+	}
+	if bloom.Check(element2) {
+		t.Errorf("Element2 detected before it was added")
+	}
+	bloom.Add(element2)
+	if !bloom.Check(element2) {
+		t.Errorf("Element2 not detected after it was added")
+	}
+	if bloom.Check(element3) {
+		t.Errorf("Element3 detected before it was added")
+	}
+	bloom.Add(element3)
+	if !bloom.Check(element3) {
+		t.Errorf("Element3 not detected after it was added")
+	}
+	if !bloom.Check(element1) {
+		t.Errorf("Element1 not detected after element1, element2, and element3 were added")
+	}
+}
+
+// Generate a random element of `keyLen` bytes
 func generateKey(keyLen int) []byte {
 	key := make([]byte, keyLen)
 	_, err := rand.Read(key)
@@ -16,8 +49,8 @@ func generateKey(keyLen int) []byte {
 	return key
 }
 
-// Test to confirm that there are no false negatives
-func TestBloom(t *testing.T) {
+// Test over many random keys to check against false negatives
+func TestBloomRandom(t *testing.T) {
 	bloom := NewFnv32(1024, 4)
 	nKeys := 100
 	nBytesPerKey := 10
@@ -26,7 +59,7 @@ func TestBloom(t *testing.T) {
 		bloom.Add(key)
 		found := bloom.Check(key)
 		if !found {
-			t.Errorf("Key missing")
+			t.Errorf("Detected a false negative")
 		}
 	}
 }
