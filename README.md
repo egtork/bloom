@@ -6,7 +6,7 @@ A Bloom filter written in Go.
 
 Use `New` or `NewFnv32` to initialize a new Bloom filter.
 
-`New` requires that you supply the hash functions used by the Bloom filter, whereas `NewFnv32` uses the FNV-1 and FNV-1a hash functions from the Go standard library.
+`New` allows you to supply the hash functions used by the Bloom filter, whereas `NewFnv32` uses the FNV-1 and FNV-1a hash functions from the Go standard library.
 
 #### func New
 `func New(size uint32, k int, hashFuncs []hash.Hash) *Bloom`
