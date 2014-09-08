@@ -15,7 +15,7 @@ where `size` is the number of bits in the bit array,
 
 `k` (>=2) is the number of hashes generated for each element,
 
-and `hashFuncs` is a slice containing two distinct hash functions satisfying the Hash interface. The two hash functions are used to create `k` unique hashes using the double hashing technique described in *"Less Hashing, Same Performance: Building a Better Bloom Filter"* by A. Kirsch and M. Mitzenmacher.
+and `hashFuncs` is a slice containing two distinct hash functions satisfying the [Hash interface](http://golang.org/pkg/hash/). The two hash functions are used to create `k` unique hashes using the double hashing technique described in *"Less Hashing, Same Performance: Building a Better Bloom Filter"* by A. Kirsch and M. Mitzenmacher.
 
 #### func NewFnv32(size uint32, k int) *Bloom
 `func NewFnv32(size uint32, k int) *Bloom`
