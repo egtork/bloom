@@ -11,16 +11,16 @@ Use `New` if you want to provide the hash functions used by the Bloom filter, or
 #### func New
 `func New(size uint32, k int, hashFuncs []hash.Hash) *Bloom`
 
-`size` is the number of bits in the bit array.
+where `size` is the number of bits in the bit array,
 
-`k` (>=2) is the number of hashes generated for each element.
+`k` (>=2) is the number of hashes generated for each element,
 
-`hashFuncs` is a slice containing two distinct hash functions satisfying the Hash interface.
+and `hashFuncs` is a slice containing two distinct hash functions satisfying the Hash interface. The two hash functions are used to create `k` unique hashes using the double hashing technique described in *"Less Hashing, Same Performance: Building a Better Bloom Filter"* by A. Kirsch and M. Mitzenmacher.
 
 #### func NewFnv32(size uint32, k int) *Bloom
 `func NewFnv32(size uint32, k int) *Bloom`
 
-Parameters `size` and `k` are as described above. `hashFuncs` is set internally to use the 32-bit FNV-1 and FNV-1a hash functions from the Go standard library.
+Parameters `size` and `k` are the same as above. `hashFuncs` is set internally to use the 32-bit FNV-1 and FNV-1a hash functions from the Go standard library.
 
 ## Usage
 
