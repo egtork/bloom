@@ -11,7 +11,7 @@ func TestBloom(t *testing.T) {
 	element1 := []byte("A stormy ocean")
 	element2 := []byte("A towering wave")
 	element3 := []byte("A rickety boat")
-	bloom := NewFnv32(1024, 4)
+	bloom := NewFNV32(1024, 4)
 	if bloom.Check(element1) || bloom.Check(element2) || bloom.Check(element3) {
 		t.Errorf("Element detected before any elements were added")
 	}
@@ -51,7 +51,7 @@ func generateKey(keyLen int) []byte {
 
 // Test over many random keys to check against false negatives
 func TestBloomRandom(t *testing.T) {
-	bloom := NewFnv32(1024, 4)
+	bloom := NewFNV32(1024, 4)
 	nKeys := 100
 	nBytesPerKey := 10
 	for k := 0; k < nKeys; k++ {
@@ -66,7 +66,7 @@ func TestBloomRandom(t *testing.T) {
 
 func BenchmarkBloomAdd(b *testing.B) {
 	key := generateKey(10)
-	bloom := NewFnv32(1024, 4)
+	bloom := NewFNV32(1024, 4)
 	for n := 0; n < b.N; n++ {
 		bloom.Add(key)
 	}
@@ -74,7 +74,7 @@ func BenchmarkBloomAdd(b *testing.B) {
 
 func BenchmarkBloomCheck(b *testing.B) {
 	key := generateKey(10)
-	bloom := NewFnv32(1024, 4)
+	bloom := NewFNV32(1024, 4)
 	for n := 0; n < b.N; n++ {
 		bloom.Check(key)
 	}

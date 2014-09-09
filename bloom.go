@@ -33,9 +33,9 @@ func New(size uint32, k int, hashFuncs []hash.Hash) *Bloom {
 	}
 }
 
-// NewFnv32 creates a new Bloom filter of the specified size, using k hash functions derived from
-// 32-bit FNV-1 and FNV-1a hash functions
-func NewFnv32(size uint32, k int) *Bloom {
+// NewFNV32 creates a new Bloom filter of the specified size, using k hash functions derived from
+// 32-bit FNV-1 and FNV-1a hash functions.
+func NewFNV32(size uint32, k int) *Bloom {
 	hashFuncs := []hash.Hash{
 		fnv.New64(),
 		fnv.New64a(),
@@ -49,19 +49,19 @@ func NewFnv32(size uint32, k int) *Bloom {
 	}
 }
 
-// Add the input element to the set.
-func (blm *Bloom) Add(input []byte) {
-	blm.doubleHash(input)
+// Add the element to the set.
+func (blm *Bloom) Add(element []byte) {
+	blm.doubleHash(element)
 	for i := 0; i < blm.k; i++ {
 		blm.bits.setBit(blm.hashes[i])
 	}
 }
 
-// Check whether the input element has been added to the set. If the input is present,
-// Check returns true. If the input is not present, Check is likely to return false but may return
+// Check whether the element has been added to the set. If the element is present,
+// Check returns true. If the element is not present, Check is likely to return false but may return
 // true (a false positive).
-func (blm *Bloom) Check(input []byte) bool {
-	blm.doubleHash(input)
+func (blm *Bloom) Check(element []byte) bool {
+	blm.doubleHash(element)
 	for i := 0; i < blm.k; i++ {
 		set := blm.bits.bit(blm.hashes[i])
 		if !set {
@@ -77,18 +77,18 @@ func (blm *Bloom) Reset() {
 }
 
 // doubleHash computes k hashes from the Bloom filter's two distinct hash functions.
-func (blm *Bloom) doubleHash(input []byte) {
-	x1 := hashToUint32(blm.hashFuncs[0], input)
-	x2 := hashToUint32(blm.hashFuncs[1], input)
+func (blm *Bloom) doubleHash(element []byte) {
+	x1 := hashToUint32(blm.hashFuncs[0], element)
+	x2 := hashToUint32(blm.hashFuncs[1], element)
 	for i := 0; i < blm.k; i++ {
 		blm.hashes[i] = uint((x1 + uint32(i)*x2) % blm.size)
 	}
 }
 
 // hashToUint32 computes the hash of the specified byte slice and returns it as a uint32.
-func hashToUint32(h hash.Hash, input []byte) uint32 {
+func hashToUint32(h hash.Hash, element []byte) uint32 {
 	h.Reset()
-	h.Write(input)
+	h.Write(element)
 	b := h.Sum(nil)
 	return binary.BigEndian.Uint32(b)
 }
