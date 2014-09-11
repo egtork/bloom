@@ -12,7 +12,7 @@ Use `New` or `NewFNV32` to initialize a new Bloom filter.
 #### func New
 `func New(size uint32, k int, hashFuncs []hash.Hash) *Bloom`
 
-where `size` is the number of bits in the bit array,
+`size` is the number of bits in the bit array,
 
 `k` (>=2) is the number of hashes generated for each element,
 
