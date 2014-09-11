@@ -97,8 +97,8 @@ func hashToUint32(h hash.Hash, element []byte) uint32 {
 type bitArray []byte
 
 func newBitArray(size uint32) bitArray {
-	if !powerOfTwo(size) || size < 8 {
-		log.Fatal("Bit array size must be a power of 2 and larger than 8")
+	if (size%8 != 0) || size < 8 {
+		log.Fatal("Bit array size must be a power of 8")
 	}
 	return make(bitArray, size/8)
 }
@@ -136,8 +136,4 @@ func FalsePositiveRateApprox(m, k, n float64) float64 {
 	t = math.Exp(-k * n / m)
 	f = math.Pow(1-t, k)
 	return f
-}
-
-func powerOfTwo(n uint32) bool {
-	return (n & (n - 1)) == 0
 }
