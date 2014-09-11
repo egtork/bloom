@@ -16,7 +16,7 @@ Use `New` or `NewFNV32` to initialize a new Bloom filter.
 
 `k` (>=2) is the number of hashes generated for each element,
 
-and `hashFuncs` is a slice containing two distinct hash functions satisfying the [Hash interface](http://golang.org/pkg/hash/). The two hash functions are used to create `k` unique hashes using the double hashing technique described in *"Less Hashing, Same Performance: Building a Better Bloom Filter"* by A. Kirsch and M. Mitzenmacher.
+and `hashFuncs` is a slice containing two distinct hash functions satisfying the [Hash interface](http://golang.org/pkg/hash/). The two hash functions are used to create `k` unique hashes using double hashing as described in *"Less Hashing, Same Performance: Building a Better Bloom Filter"* by A. Kirsch and M. Mitzenmacher.
 
 #### func NewFNV32(size uint32, k int) *Bloom
 `func NewFNV32(size uint32, k int) *Bloom`
