@@ -8,6 +8,7 @@ Use `New` or `NewFNV32` to initialize a new Bloom filter.
 
 `New` allows you to supply the hash functions used by the Bloom filter, whereas `NewFNV32` uses the [FNV-1 and FNV-1a](http://golang.org/pkg/hash/fnv/) hash functions from the Go standard library.
 
+
 #### func New
 `func New(size uint32, k int, hashFuncs []hash.Hash) *Bloom`
 
@@ -20,7 +21,7 @@ and `hashFuncs` is a slice containing two distinct hash functions satisfying the
 #### func NewFNV32(size uint32, k int) *Bloom
 `func NewFNV32(size uint32, k int) *Bloom`
 
-Parameters `size` and `k` are the same as above. `hashFuncs` is set internally to use the 32-bit FNV-1 and FNV-1a hash functions from the Go standard library.
+Parameters `size` and `k` are the same as above. The filter uses the 32-bit [FNV-1 and FNV-1a](http://golang.org/pkg/hash/fnv/) hash functions from the Go standard library.
 
 ## Usage
 
